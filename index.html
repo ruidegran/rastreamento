@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rastreamento de Entrega</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    .card {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      font-size: 1rem;
+    }
+    #linkGerado {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Gerador de Link de Rastreamento</h2>
+    <p>Informe o número do motoboy com DDD (somente números):</p>
+    <input type="text" id="numeroMotoboy" placeholder="Ex: 86991234567">
+    <button onclick="gerarLink()">Gerar Link de Rastreamento</button>
+
+    <div id="linkGerado"></div>
+  </div>
+
+  <script>
+    function gerarLink() {
+      const numero = document.getElementById('numeroMotoboy').value;
+      if (!/^\d{10,11}$/.test(numero)) {
+        alert('Número inválido. Digite apenas os números com DDD.');
+        return;
+      }
+      const link = `https://wa.me/55${numero}?text=Por+favor%2C+compartilhe+sua+localiza%C3%A7%C3%A3o+em+tempo+real+com+este+contato+via+Google+Maps+ou+WhatsApp.`;
+      document.getElementById('linkGerado').innerHTML = `
+        <p><strong>Link para enviar ao motoboy:</strong></p>
+        <a href="${link}" target="_blank">${link}</a>
+        <p>Depois que ele compartilhar a localização com você, envie o link para o cliente.</p>
+      `;
+    }
+  </script>
+</body>
+</html>
