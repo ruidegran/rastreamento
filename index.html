@@ -56,7 +56,12 @@
   <main>
     <label for="link">Cole o link do Google Maps (compartilhamento de localização):</label>
     <input type="text" id="link" placeholder="Ex: https://maps.app.goo.gl/abc123">
+
+    <label for="numeroCliente">Número do cliente com DDD (somente números):</label>
+    <input type="text" id="numeroCliente" placeholder="Ex: 86991234567">
+
     <button onclick="mostrarMapa()">Abrir Rastreamento</button>
+    <button onclick="enviarParaCliente()">Enviar para o Cliente</button>
 
     <div id="status" class="status" style="display: none;">
       Motoboy em rota de entrega! Clique abaixo para acompanhar:
@@ -66,16 +71,34 @@
   </main>
 
   <script>
+    let linkFinal = '';
+
     function mostrarMapa() {
       const link = document.getElementById('link').value.trim();
       if (!link.startsWith('http')) {
         alert('Por favor, insira um link válido do Google Maps.');
         return;
       }
+      linkFinal = link;
       const linkHtml = `<a href="${link}" target="_blank">🔗 Abrir localização ao vivo</a>`;
       document.getElementById('linkGerado').innerHTML = linkHtml;
       document.getElementById('linkGerado').style.display = 'block';
       document.getElementById('status').style.display = 'block';
+    }
+
+    function enviarParaCliente() {
+      const numero = document.getElementById('numeroCliente').value.trim();
+      if (!/^\d{10,11}$/.test(numero)) {
+        alert('Número inválido. Digite apenas os números com DDD.');
+        return;
+      }
+      if (!linkFinal) {
+        alert('Você precisa primeiro gerar o link do rastreamento.');
+        return;
+      }
+      const mensagem = `Sua entrega já está a caminho! Acompanhe aqui: ${encodeURIComponent(linkFinal)}`;
+      const urlWhats = `https://wa.me/55${numero}?text=${mensagem}`;
+      window.open(urlWhats, '_blank');
     }
   </script>
 </body>
